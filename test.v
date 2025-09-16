@@ -1,61 +1,31 @@
-`timescale 10ns/1ns
-
-module test;
-
-    // Set up signals that match to
-    // your module under test
-    // In this case, that is top
-    // So we have to match up sw and led
-    // with that in top.v
-    reg [15:0] sw;
-    wire [15:0] led;
-
-    // We will talk about this later :)
-    pulldown(led[0]);
-
-    // "plug" in a top.v
-    // you can think of this not as function calls
-    // but instead as clicking in a discrete circuit
-    // on a breadboard.
-    // We will actually do this!
-    top dut(
+module test();
+    reg [3:0] sw;
+    wire [2:0] led;
+    integer i;
+    
+    top uut(
         .sw(sw),
         .led(led)
     );
 
-    // Begins the test process
+    pulldown(led[0]);
+    pulldown(led[1]);
+    pulldown(led[2]);
+    
     initial begin
-        // Dump out to a waveform file
-        $dumpvars(0, test);
-
-        // Turn off switch 0
-        sw[0] = 0;
-        
-        // Make sure LED 0 is off
-        if (led[0] != 0) begin
-            $display("Test failed!");
+    $dumpvars(0, test);
+    for (i = 0; i < 16; i = i + 1) begin
+        sw = i;
+        #20;
+        if (led[0] ^ led[1] != 0) begin
+            $display("Minterm output does not match");
             $finish;
         end
-
-        // Wait 20 ns
-        #20;
-        // Turn on switch 0
-        sw[0] = 1;
-
-        // Wait 20 ns
-        #20;
-
-        // Make sure LED 0 is on
-        if (led[0] != 1) begin
-            $display("Test failed!");
+        if (led[0] ^ led[2] != 0) begin
+            $display("Maxterm output does not match");
             $finish;
         end
-        
-        // Wait 20 ns
-        #20;
-
-        // Test pased!
-        $display("Test passed!");
-        $finish;
+    end
+    $finish;
     end
 endmodule
