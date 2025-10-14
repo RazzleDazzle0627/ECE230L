@@ -10,7 +10,7 @@ module twos_compliment(
     genvar i;
     generate
         full_adder bit_0(
-            .A(A[0]),
+            .A(~A[0]),
             .B(1'b1),
             .Cin(0),
             .Y(Y[0]),
@@ -31,5 +31,6 @@ module twos_compliment(
 
     
     
+
 
 endmodule
