@@ -4,7 +4,7 @@ module memory_system(
         input [7:0] data,
         input store,
         input [1:0] addr,
-        output reg [7:0] memory
+        output [7:0] memory
     );
     
     wire [7:0] input_data[3:0];
@@ -51,7 +51,8 @@ module memory_system(
         .B(memory_data[1]),
         .C(memory_data[2]),
         .D(memory_data[3]),
-        .enable(1)
+        .enable(1),
+        .Y(memory)
     );
     
 endmodule
