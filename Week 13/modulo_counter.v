@@ -13,9 +13,12 @@ module modulo_counter (
     //we wire our output of each full adder into a D flip flip as our D input
     //our Q from the D flip flop gets wire into the A input of our full adder
     //cout goes into cin of next one like previous labs
+    
     wire [2:0] fAinputs;
     wire [2:0] dFFinputs;
     wire [2:0] carryout;
+    
+    assign state = fAinputs;
     
     
     dflipflop bitZero (
@@ -63,12 +66,13 @@ module modulo_counter (
     );
     
     //this is the furthest right dff on the diagram!
-        dflipflop forOut (
+    dflipflop forOut (
         .D(logicForOutput),
         .Clock(clk), 
         .Reset(Reset), // we might need to change this later so that it logically resets in both cases
         .Q(out)
     );
+    
     
     
 

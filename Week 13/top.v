@@ -1,6 +1,6 @@
 module top(
         input btnU, btnC,
-        output led[6:0]
+        output [6:0]led
     );
     
     ripple_counter rc(
@@ -11,7 +11,7 @@ module top(
     
     modulo_counter mc(
         .clk(btnC),
-        .rst(btnU),
+        .reset(btnU),
         .state(led[5:3]),
         .out(led[6])
     );

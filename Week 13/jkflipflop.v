@@ -1,7 +1,6 @@
 module jkflipflop(
     input J, K, clock, reset,
-    output Q, 
-    output notQ
+    output Q
 );
 
     wire Q_next;
